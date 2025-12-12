@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: service-booking-mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password123
+      MONGO_INITDB_DATABASE: service_booking_db
+    volumes:
+      - mongodb_data:/data/db
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    networks:
+      - service-booking-network
+
+  redis:
+    image: redis:alpine
+    container_name: service-booking-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    command: redis-server --requirepass redis_password
+    volumes:
+      - redis_data:/data
+    networks:
+      - service-booking-network
+
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    container_name: redis-commander
+    restart: unless-stopped
+    ports:
+      - "8081:8081"
+    environment:
+      - REDIS_HOSTS=local:redis:6379
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=redis_password
+    depends_on:
+      - redis
+    networks:
+      - service-booking-network
+
+volumes:
+  mongodb_data:
+  redis_data:
+
+
+networks:
+  service-booking-network:
+    driver: bridge
