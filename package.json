@@ -24,6 +24,7 @@
     "ecommerce",
     "nodejs",
     "express"
+    , "mysql"
   ],
   "author": "",
   "license": "ISC",
@@ -46,10 +47,13 @@
     "mongoose-paginate-v2": "^1.9.1",
     "morgan": "^1.10.1",
     "multer": "^2.0.2",
+    "mysql2": "^3.15.3",
     "nodemailer": "^7.0.11",
     "rate-limiter-flexible": "^9.0.0",
     "razorpay": "^2.9.6",
     "redis": "^5.10.0",
+    "sequelize": "^6.37.7",
+    "sequelize-cli": "^6.6.3",
     "socket.io": "^4.8.1",
     "stripe": "^20.0.0",
     "twilio": "^5.10.7",
